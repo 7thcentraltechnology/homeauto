@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "566360503863",
+    "project_id": "home-auto-83eae",
+    "storage_bucket": "home-auto-83eae.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:566360503863:android:f81a75859a1eef1d5eb1b2",
+        "android_client_info": {
+          "package_name": "com.example.homeauto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "566360503863-rqebaebu8bdh3tkh2oe18cjfsceji70l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAaapa8lYH0LiVlArrBW8721IVhFQKwS0M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "566360503863-rqebaebu8bdh3tkh2oe18cjfsceji70l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
