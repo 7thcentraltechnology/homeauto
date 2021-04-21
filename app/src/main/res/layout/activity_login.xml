@@ -47,20 +47,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_gravity="end"
+        android:orientation="vertical">
 
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Remember Me"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="0dp"
-            android:textColor="@color/white"
-            android:buttonTint="@color/white"
-            android:checked="true"/>
         <TextView
+            android:id="@+id/fg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Forget Password"
@@ -75,7 +66,13 @@
 
 
     </LinearLayout>
-
+<ProgressBar
+    android:id="@+id/pb"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:visibility="gone"
+    android:indeterminateTint="@color/white"
+    android:layout_margin="16dp"/>
     <Button
         android:id="@+id/login"
         android:layout_width="match_parent"
@@ -89,7 +86,18 @@
         android:layout_marginTop="0dp"
         android:background="@drawable/shapelogin"/>
 
-
+    <TextView
+        android:id="@+id/singuptv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Don't have an account? Signup"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="20dp"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:padding="4dp"/>
 
 
 

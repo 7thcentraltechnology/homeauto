@@ -5,13 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,8 +25,9 @@ public class Signup extends AppCompatActivity {
     TextView Already_a_member;
 
     Button btn_signup;
-    EditText edt_email, edt_password;
-    String email,password;
+    EditText edt_email, edt_password, et_name;
+    String name,email,password;
+    ProgressBar pb;
 
 
     FirebaseAuth firebaseAuth;
@@ -42,48 +46,74 @@ public class Signup extends AppCompatActivity {
         Already_a_member = (TextView)findViewById(R.id.tv_alreadyAMember);
 
         edt_email = (EditText) findViewById(R.id.id_email);
+        et_name = (EditText) findViewById(R.id.id_name);
         edt_password = (EditText) findViewById(R.id.id_passsword);
+        pb = findViewById(R.id.pb);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
         btn_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               email = edt_email.getText().toString().trim();
+                pb.setVisibility(View.VISIBLE);
+                name = et_name.getText().toString().trim();
+                email = edt_email.getText().toString().trim();
                password = edt_password.getText().toString().trim();
 
+                if (TextUtils.isEmpty(name)) {
+                    pb.setVisibility(View.GONE);
+                    Toast.makeText(Signup.this, "Please Enter an name", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-//               rootNode = FirebaseDatabase.getInstance();
-//               reference = rootNode.getReference("User");
-//               UserHelper userHelper = new UserHelper(email,password);
-//               reference.child(email).setValue(userHelper);
+                if (TextUtils.isEmpty(email)) {
+                    pb.setVisibility(View.GONE);
+                    Toast.makeText(Signup.this, "Please Enter a email", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (password.length() < 6) {
+                    pb.setVisibility(View.GONE);
+                    Toast.makeText(Signup.this, "Password is too password", Toast.LENGTH_SHORT).show();
+                }
+
 
                 firebaseAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(Signup.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    UserHelper userHelper=new UserHelper(email,password);
+                                    pb.setVisibility(View.GONE);
+                                    UserHelper userHelper=new UserHelper(name,email,password);
                                     reference.child(firebaseAuth.getCurrentUser().getUid()).setValue(userHelper).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()){
+                                                pb.setVisibility(View.GONE);
+                                                startActivity(new Intent(getApplicationContext(), Login.class));
                                                 Toast.makeText(Signup.this, "Record Save", Toast.LENGTH_SHORT).show();
 
-                                            }else {
-                                                Toast.makeText(Signup.this, "not record", Toast.LENGTH_SHORT).show();                                   Toast.makeText(Signup.this, "Registeration Successfull", Toast.LENGTH_SHORT).show();
                                             }
                                         }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(Signup.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                            pb.setVisibility(View.GONE);
+                                        }
                                     });
-                                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
-                                } else {
-                                    Toast.makeText(Signup.this, "Registeration Failed", Toast.LENGTH_SHORT).show();
                                 }
 
                                 // ...
                             }
-                        });
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(Signup.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        pb.setVisibility(View.GONE);
+                    }
+                });
 
             }
         });

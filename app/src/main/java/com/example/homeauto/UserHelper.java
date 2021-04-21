@@ -1,12 +1,13 @@
 package com.example.homeauto;
 
 public class UserHelper {
-    String email,password;
+    String name,email,password;
 
     public UserHelper() {
 
     }
-    public UserHelper(String email, String password) {
+    public UserHelper(String name, String email, String password) {
+        this.name = name;
         this.email = email;
         this.password = password;
     }
@@ -25,5 +26,13 @@ public class UserHelper {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
