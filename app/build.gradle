@@ -41,6 +41,8 @@ dependencies {
     implementation 'com.android.support:design:29.1.0'
     implementation 'com.miguelcatalan:materialsearchview:1.4.0'
     implementation 'com.firebaseui:firebase-ui-database:6.2.1'
-    implementation 'com.google.firebase:firebase-database:19.3.1'
+    implementation 'com.google.firebase:firebase-database'
     implementation 'com.google.firebase:firebase-auth:19.3.2'
+    implementation 'com.google.firebase:firebase-core:16.0.1'
+    implementation platform('com.google.firebase:firebase-bom:27.0.0')
 }
