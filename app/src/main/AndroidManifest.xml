@@ -9,7 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HomeAuto">
-        <activity android:name=".Lights"></activity>
+        <activity android:name=".Create_User"></activity>
+        <activity android:name=".Manage_User" />
+        <activity android:name=".WaterTank" />
+        <activity android:name=".Fans" />
+        <activity android:name=".Lights" />
         <activity android:name=".Update_password" />
         <activity android:name=".Forget" />
         <activity android:name=".Signup" />

@@ -58,7 +58,7 @@ public class Signup extends AppCompatActivity {
                 pb.setVisibility(View.VISIBLE);
                 name = et_name.getText().toString().trim();
                 email = edt_email.getText().toString().trim();
-               password = edt_password.getText().toString().trim();
+                password = edt_password.getText().toString().trim();
 
                 if (TextUtils.isEmpty(name)) {
                     pb.setVisibility(View.GONE);

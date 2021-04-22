@@ -2,6 +2,7 @@ package com.example.homeauto;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -42,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
 
     String Userid;
 
+    CardView fans_activity,water_activity,manage_user,logout;
+
     LinearLayout Light_control;
     private DatabaseReference mDatabase;
 
@@ -60,7 +63,13 @@ public class MainActivity extends AppCompatActivity {
 
         textView.setText(firebaseUser.getEmail());
         name_tv.setText(firebaseUser.getDisplayName());
+
+
         Light_control = findViewById(R.id.light_control);
+        fans_activity = findViewById(R.id.fans_activity);
+        water_activity = findViewById(R.id.water_activity);
+        manage_user = findViewById(R.id.manage_user);
+        logout = findViewById(R.id.logout);
 
         sharedPreferences = getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
 
@@ -75,6 +84,42 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        fans_activity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent a=new Intent(MainActivity.this,Fans.class);
+                startActivity(a);
+            }
+        });
+        water_activity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent c=new Intent(MainActivity.this,WaterTank.class);
+                startActivity(c);
+            }
+        });
+        manage_user.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent d=new Intent(MainActivity.this,Manage_User.class);
+                startActivity(d);
+            }
+        });
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.clear();
+                editor.apply();
+                finish();
+                Toast.makeText(MainActivity.this, "Logout", Toast.LENGTH_SHORT).show();
+                FirebaseAuth.getInstance().signOut();
+                Intent intent=new Intent(MainActivity.this,Login.class);
+                startActivity(intent);
+            }
+        });
+
+
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("Student").child(Userid).child("name").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
@@ -87,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
 
 
 
@@ -103,14 +149,7 @@ public class MainActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.logout:
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.clear();
-                editor.apply();
-                finish();
-                Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
-                FirebaseAuth.getInstance().signOut();
-                Intent intent=new Intent(MainActivity.this,Login.class);
-                startActivity(intent);
+
                 return true;
             case R.id.changepassword:
                 Intent in=new Intent(MainActivity.this,Update_password.class);
