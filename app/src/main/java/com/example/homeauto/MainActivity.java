@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
     String Userid;
 
-    CardView fans_activity,water_activity,manage_user,logout;
+    CardView fans_activity,water_activity,manage_user,manage_sensor,logout;
 
     LinearLayout Light_control;
     private DatabaseReference mDatabase;
@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         fans_activity = findViewById(R.id.fans_activity);
         water_activity = findViewById(R.id.water_activity);
         manage_user = findViewById(R.id.manage_user);
+        manage_sensor = findViewById(R.id.manage_sensor);
         logout = findViewById(R.id.logout);
 
         sharedPreferences = getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
@@ -103,6 +104,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent d=new Intent(MainActivity.this,Manage_User.class);
                 startActivity(d);
+            }
+        });
+        manage_sensor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+           Intent speach= new Intent(MainActivity.this,SpeachLights.class);
+           startActivity(speach);
             }
         });
         logout.setOnClickListener(new View.OnClickListener() {

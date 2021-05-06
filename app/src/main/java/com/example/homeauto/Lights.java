@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -15,7 +16,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class Lights extends AppCompatActivity {
-    Switch bedroom_bulb_btn;
+    Switch bedroom_bulb_btn,living_room_btn;
     ImageView bed_bulb;
 
     private static String MY_PREF = "switch_prefs";
@@ -47,6 +48,7 @@ public class Lights extends AppCompatActivity {
         FirebaseUser user=fauth.getCurrentUser();
 
         bedroom_bulb_btn = findViewById(R.id.bedroom_bulb);
+        living_room_btn = findViewById(R.id.livingroom_bulb);
         bed_bulb = findViewById(R.id.bed_bulb);
 
         myref = getSharedPreferences(MY_PREF,MODE_PRIVATE);
@@ -60,9 +62,13 @@ public class Lights extends AppCompatActivity {
         if (light_status){
             bed_bulb.setImageResource(R.drawable.onbulb);
             reference.child(Userid).child("Bedroom").setValue("ON");
-        }else{
+            new RequestTask().execute("http://192.168.18.198/1/on");
+
+           }else{
             bed_bulb.setImageResource(R.drawable.offbulb);
             reference.child(Userid).child("Bedroom").setValue("OFF");
+            new RequestTask().execute("http://192.168.18.198/1/off");
+
 
         }
 
@@ -71,6 +77,8 @@ public class Lights extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (compoundButton.isChecked()){
                     reference.child(Userid).child("Bedroom").setValue("ON");
+                    new RequestTask().execute("http://192.168.18.198/1/on");
+
                     bed_bulb.setImageResource(R.drawable.onbulb);
                     myeditor.putBoolean(Switch_Status,true);
                     myeditor.putBoolean(Light_Status,true);
@@ -78,6 +86,8 @@ public class Lights extends AppCompatActivity {
                     bedroom_bulb_btn.setChecked(true);
                 }else{
                     reference.child(Userid).child("Bedroom").setValue("OFF");
+                    new RequestTask().execute("http://192.168.18.198/1/off");
+
                     bed_bulb.setImageResource(R.drawable.offbulb);
                     myeditor.putBoolean(Switch_Status,false);
                     myeditor.putBoolean(Light_Status,false);
@@ -86,5 +96,15 @@ public class Lights extends AppCompatActivity {
                 }
             }
         });
+        living_room_btn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+
+
+            }
+        });
+
+
     }
 }
